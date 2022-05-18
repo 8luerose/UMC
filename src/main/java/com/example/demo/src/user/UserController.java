@@ -128,4 +128,22 @@ public class UserController {
         }
     }
 
+    /**
+     * 유저 삭제 API
+     * [PATCH] /users/:userIdx/status
+     * @return BaseResponse<String>
+     */
+    //@ResponseBody
+    @PatchMapping("/{userIdx}/status")  // (PATCH) 127.0.0.1:9000/users/:userIdx/status
+    public BaseResponse<String> modifyUserName(@PathVariable("userIdx") int userIdx){
+        try{
+            userService.modifyUserStatus(userIdx);
+
+            String result = "삭제되었습니다.";
+            return new BaseResponse<>(result);
+        } catch (BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 }

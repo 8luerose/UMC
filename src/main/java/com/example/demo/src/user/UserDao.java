@@ -83,6 +83,15 @@ public class UserDao {
     }
 
 
+    public int modifyUserStatus(int userIdx){
+        String modifyUserStatusQuery = "update User set status = 'INACTIVE' where userIdx = ? ";
 
+        return this.jdbcTemplate.update(modifyUserStatusQuery, userIdx);
+    }
+
+    public int checkUser(int userIdx){
+        String checkUserQuery = "select exists(select userIdx from User where userIdx = ?)";
+        return this.jdbcTemplate.queryForObject(checkUserQuery, int.class, userIdx);
+    }
 
 }
