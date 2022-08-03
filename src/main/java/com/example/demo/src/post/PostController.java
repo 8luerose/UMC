@@ -67,6 +67,11 @@ public class PostController {
     @PostMapping("") // (GET) 127.0.0.1:9000/posts/?userIdx=
     public BaseResponse<PostPostsRes> createPosts(@RequestBody PostPostsReq postPostsReq) {
         try{
+            int userIdxByJwt = jwtService.getUserIdx();
+            if(postPostsReq.getUserIdx()!=userIdxByJwt){
+                return new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+            }
+
             if(postPostsReq.getContent().length()>450)
             {
                 return new BaseResponse<>(BaseResponseStatus.POST_POSTS_INVALID_CONTENTS);
